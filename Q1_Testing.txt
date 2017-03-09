@@ -1,0 +1,66 @@
+Starting test run:
+Enter the size of the Matrix: 
+10
+The Matrix of size 10 contains the following elements: 
+281	177	42	136	19	23	12	44	354	334	
+142	144	244	389	143	10	153	156	4	142	
+34	104	6	90	111	5	315	109	299	88	
+182	57	135	72	264	107	299	140	304	167	
+318	348	162	389	145	135	258	151	185	103	
+301	64	115	300	23	202	26	126	309	288	
+110	66	235	300	288	166	244	101	222	282	
+228	44	98	14	40	169	246	38	275	169	
+24	317	159	367	198	135	13	177	71	284	
+12	201	286	20	356	349	207	233	218	188	
+
+4 found at coordinates 1, 8
+5 found at coordinates 2, 5
+110 found at coordinates 6, 0
+6 found at coordinates 2, 2
+12 found at coordinates 0, 6
+111 found at coordinates 2, 4
+401 could not be found in the Matrix.
+-------------------------------------------------
+
+Rows ordered in Ascending Order: 
+The Matrix of size 10 contains the following elements: 
+12	19	23	42	44	136	177	281	334	354	
+4	10	142	142	143	144	153	156	244	389	
+5	6	34	88	90	104	109	111	299	315	
+57	72	107	135	140	167	182	264	299	304	
+103	135	145	151	162	185	258	318	348	389	
+23	26	64	115	126	202	288	300	301	309	
+66	101	110	166	222	235	244	282	288	300	
+14	38	40	44	98	169	169	228	246	275	
+13	24	71	135	159	177	198	284	317	367	
+12	20	188	201	207	218	233	286	349	356	
+
+4 found at coordinates 0, 1
+5 found at coordinates 0, 2
+110 found at coordinates 2, 6
+6 found at coordinates 1, 2
+12 found at coordinates 0, 0
+111 found at coordinates 7, 2
+401 could not be found in the Matrix
+-------------------------------------------------
+
+Columns ordered in Asecnding Order: 
+The Matrix of size 10 contains the following elements: 
+4	6	23	42	44	104	109	111	244	275	
+5	10	34	44	90	136	153	156	246	300	
+12	19	40	88	98	144	169	228	288	304	
+12	20	64	115	126	167	177	264	299	309	
+13	24	71	135	140	169	182	281	299	315	
+14	26	107	135	143	177	198	282	301	354	
+23	38	110	142	159	185	233	284	317	356	
+57	72	142	151	162	202	244	286	334	367	
+66	101	145	166	207	218	258	300	348	389	
+103	135	188	201	222	235	288	318	349	389	
+
+4 found at coordinates 0, 0
+5 found at coordinates 1, 0
+110 found at coordinates 6, 2
+6 found at coordinates 0, 1
+12 found at coordinates 3, 0
+111 found at coordinates 0, 7
+401 could not be found in the Matrix
