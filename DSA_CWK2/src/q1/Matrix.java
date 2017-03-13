@@ -49,13 +49,7 @@ public class Matrix
         }
         
         //add the test elements to the test array
-        int[] testArray = new int[6];
-        testArray[0] = 4;
-        testArray[1] = 12;
-        testArray[2] = 110;
-        testArray[3] = 5;
-        testArray[4] = 6;
-        testArray[5] = 111;
+        int[] testArray = {4, 12, 110, 5, 6, 111};
         
         //Iterate over the matrix, adding the test values at random locations 
         for(int j = 0; j < testArray.length; j++)
