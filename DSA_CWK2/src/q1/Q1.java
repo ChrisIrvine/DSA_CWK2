@@ -1,123 +1,111 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * File:        Q1.java
+ *
+ * Author:      ruw12gbu, 100036248
+ *
+ * Description: Test driver for the Question 1 Algorithms. For testing purposes
+ *              the Matrix constructor is limited to filling individual elements
+ *              to 400.
+ *
+ * Version:     v1.0 - Created
+ *              v2.0 - Added the timer() method
  */
 package q1;
 import java.util.Scanner;
+
 /**
- *
- * @author ruw12gbu
+ * @author ruw12gbu, 100036248
  */
 public class Q1 
 {
-    static int[] testValues = new int[7];
-
+    //Array to hold matrix sizes
+    static int[] size = new int [22];
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) 
     {
-        System.out.println("Starting test run:");
         Scanner scan = new Scanner(System.in);
-        Search search = new Search();
-        testValues[0] = 4;
-        testValues[1] = 5;
-        testValues[2] = 110;
-        testValues[3] = 6;
-        testValues[4] = 12;
-        testValues[5] = 111;
-        testValues[6] = 401;
+        CSVFileWriter csv = new CSVFileWriter();
+        SearchFactory searchF = new SearchFactory();
+        Search search = new SearchD();
+        boolean valid = false;
+        double[] resultsArray = new double[4];
+        double[][] resultsMatrix = new double[22][4];
+        int[] size = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300,
+                            400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 
+                            4000};
         
-        System.out.println("Enter the size of the Matrix: ");
-        int n = scan.nextInt();
-        
-        Matrix m = new Matrix(n);
-        
-        System.out.println(m.toString());
-        
-        for(int i = 0; i < testValues.length; i++)
+        System.out.println("What algorithm would you like to test?");
+        System.out.println("Your options are the following:");
+        System.out.println("'D' = search an unordered matrix");
+        System.out.println("'D1' = search a matrix with ordered rows "
+                + "(ascending order)");
+        System.out.println("'D2' = search a matrix with ordered rows and "
+                + "columns (ascending order)");
+        System.out.println("Enter your choice now...");
+        String choice = scan.next();
+        try
         {
-            if(search.findElementD(m, n, testValues[i]) == true)
+            search = searchF.chooseSearch(choice);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Please enter either D, D1, D2");
+        }
+       
+        System.out.println("Enter the number of reps the test to take:");
+        int reps = scan.nextInt();
+        //Start Test...
+        for(int n = 0; n < size.length; n++)
+        {       
+            System.out.println("running test" + n);
+            //Record mean and std deviation of performing an operation reps 
+            //times
+            Matrix m = new Matrix(size[n]);
+            if(null != choice)
+            switch (choice) 
             {
-                System.out.println(testValues[i] + " found at coordinates "
-                        + search.getFoundR() + ", " + search.getFoundC());
+                case "D1":
+                    m.rowOrder();
+                    break;
+                case "D2":
+                    m.rowOrder();
+                    m.columnOrder();
+                    break;
+                default:
+                    break;
             }
-            else
+            double sum = 0;
+            double sumSquared = 0;
+            for (int k = 0; k < reps; k++)
             {
-                System.out.println(testValues[i] + " could not be found in the "
-                        + "Matrix.");
+                long t1 = System.nanoTime();
+                search.findElement(m, m.getSize(), 2147483647);
+                long   t2 = System.nanoTime() - t1;
+                //Recording time in miliseconds to make it more interpratable
+                sum += (double)t2/1000000.0;
+                sumSquared += (t2/1000000.0) * (t2/1000000.0);
+            }
+            double mean = sum / reps;
+            double variance = sumSquared / reps - (mean * mean);
+            double stdDev = Math.sqrt(variance);
+
+            resultsArray[0] = size[n];
+            resultsArray[1] = mean;
+            resultsArray[2] = variance;
+            resultsArray[3] = stdDev;
+
+            for(int j = 0; j < 4; j++)
+            {
+                System.out.println("adding to matrix");
+                resultsMatrix[n][j] = resultsArray[j];
             }
         }
-        
-        //Formatting
-        System.out.println("-------------------------------------------------");
-        m.rowOrder();
-        
-        System.out.println("\nRows ordered in Ascending Order: ");
-        System.out.println(m.toString());
-        
-        for(int i = 0; i < testValues.length; i++)
-        {
-            if(search.findElementD1(m, n, testValues[i]) == true)
-            {
-                System.out.println(testValues[i] + " found at coordinates "
-                        + search.getFoundR() + ", " + search.getFoundC());
-            }
-            else
-            {
-                System.out.println(testValues[i] + " could not be found in the"
-                        + " Matrix");
-            }
-        }
-        
-        
-        m.columnOrder();
-        //Formatting
-        System.out.println("-------------------------------------------------");
-        
-        System.out.println("\nColumns ordered in Asecnding Order: ");
-        System.out.println(m.toString());
-        
-        for(int i = 0; i < testValues.length; i++)
-        {
-            if(search.findElementD2(m, n, testValues[i]) == true)
-            {
-                System.out.println(testValues[i] + " found at coordinates "
-                        + search.getFoundR() + ", " + search.getFoundC());
-            }
-            else
-            {
-                System.out.println(testValues[i] + " could not be found in the"
-                        + " Matrix");
-            }
-        }
-    }
-    
-    public double[] timer()
-    {
-        double[] results = new double[3];
-        //Record mean and std deviation of performing an operation reps times
-        double sum = 0;
-        double s = 0;
-        double sumSquared = 0;
-        for(int i = 0; i < 400; i++)
-        {
-            long t1 = System.nanoTime();
-            //findElementCall
-            long t2 = System.nanoTime() - t1;
-            //Recording time in miliseconds to make it more interpratable
-            sum += (double)t2/1000000.0;
-            sumSquared += (t2/1000000.0) * (t2/1000000.0);
-        }
-        double mean = sum / 400;
-        double variance = sumSquared / 400 - (mean * mean);
-        double stdDev = Math.sqrt(variance);
-        
-        results[0] = mean;
-        results[1] = variance;
-        results[2] = stdDev;
-        
-        return results;
+        System.out.println("Enter the name of the File you want to create: ");
+        String fileName = scan.next();
+        csv.writeCSVFile(fileName, resultsMatrix, size.length, 
+                resultsArray.length);
     }
 }
