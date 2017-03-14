@@ -12,7 +12,7 @@
  *
  * Version:     v1.0 - created.
  */
-package q1;
+package Question1;
 
 //Necessary imports
 import java.util.Random;
@@ -30,42 +30,32 @@ public class Matrix
     
     /**
      * Constructor Method that takes a single integer parameter, the size of the
-     * square matrix. Matrix is filled with preset test variables and randomly
-     * generated variables.
+     * square matrix. Matrix is filled with predominantly 0's, but the second 
+     * last and last elements of each row is filled with a 1 and a 3 
+     * respectively.
      * @param n 
      */
     public Matrix(int n)
     {
         int[][] matrix = new int[n][n];
+        int[] filler = new int[n];
         ML = n;
         
+        for (int i = 0; i < n; i++) 
+        {
+            filler[i] = 0;
+        }
+        
+        filler[n-2] = 1;
+        filler[n-1] = 3;
         //Itearte over the matrix, inserting random numbers at each position
         for(int i = 0; i < n; i++)
         {
             for(int j = 0; j < n; j++)
             {
-                matrix[i][j] = random.nextInt(2147483646);
+                matrix[i][j] = filler[i];
             }
         }
-        
-        //add the test elements to the test array
-        int[] testArray = {4, 12, 110, 5, 6, 111};
-        
-        //Iterate over the matrix, adding the test values at random locations 
-        for(int j = 0; j < testArray.length; j++)
-        {
-            //generate random coordinates within the array
-            int temp1 = random.nextInt(n);
-            int temp2 = random.nextInt(n);
-
-            //check that the test element does not already exist at position
-            if(matrix[temp1][temp2] != testArray[j])
-            {
-                matrix[temp1][temp2] = testArray[j];
-            }
-        }
-        
-        //store matrix within class varialbe
         MATRIXT = matrix;
     }
     
@@ -88,54 +78,6 @@ public class Matrix
     public int getElement(int row, int column)
     {
         return MATRIXT[row][column];
-    }
-    
-    /**
-     * Method to sort each column into Ascending Order.
-     */
-    public void columnOrder()
-    {
-        //For loops to iterate through Matrix
-        for(int i = 0; i < ML; i++)
-        {
-            for(int j = 0; j < ML; j++)
-            {
-                for(int k = 0; k < ML; k++)
-                {
-                    //Checks if the first element is lower than the next
-                    if(MATRIXT[i][j] < MATRIXT[k][j])
-                    {
-                        int tempHold = MATRIXT[i][j];
-                        MATRIXT[i][j] = MATRIXT[k][j];
-                        MATRIXT[k][j] = tempHold;
-                    }
-                }
-            }
-        }
-    }
-    
-    /**
-     * Method to sort each row into Ascending order.
-     */
-    public void rowOrder()
-    {
-        //For loops to iterate through Matrix
-        for(int i = 0; i < ML; i++)
-        {
-            for(int j = 0; j < ML; j++)
-            {
-                for(int k = 0; k < ML; k++)
-                {
-                    //Checks if the first element is lower than the next
-                    if(MATRIXT[i][j] < MATRIXT[i][k])
-                    {
-                        int tempHold = MATRIXT[i][j];
-                        MATRIXT[i][j] = MATRIXT[i][k];
-                        MATRIXT[i][k] = tempHold;
-                    }
-                }
-            }
-        }
     }
     
     /**

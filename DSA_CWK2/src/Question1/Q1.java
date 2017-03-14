@@ -12,7 +12,7 @@
  *              v3.0 - Reworked entire project to be procedural, elminated all 
  *              additional classes apart from Matrix.java
  */
-package q1;
+package Question1;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -34,57 +34,77 @@ public class Q1
         int[] size = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300,
                             400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 
                             4000};
-        int reps = 10;
+        int reps = 1000;
         
-        //Start Test...
+        //Starting test
         for(int n = 0; n < size.length; n++)
         {       
-            //Record mean and std deviation of performing an operation reps 
-            //times
+            /*
+             * Record mean and std deviation of performing an operation reps 
+             * times.
+             * Generate a new Matrix of size n
+             */
             Matrix m = new Matrix(size[n]);
+            //Initialise variables for use later
             double sum = 0;
             double sumSquared = 0;
+            /*
+             * Run the worst-case scenario (element could be in there but its 
+             * not) 1000 times to gather the best test data
+             */
             for (int k = 0; k < reps; k++)
             {
+                //Record the time before the algorithm is run
                 long t1 = System.nanoTime();
-                findElementD(m, m.getSize(), 2147483647);
+                //Run the algorithm
+                findElementD(m, m.getSize(), 2);
+                //Record the time after algorithm is run
                 long   t2 = System.nanoTime() - t1;
                 //Recording time in miliseconds to make it more interpratable
                 sum += (double)t2/1000000.0;
                 sumSquared += (t2/1000000.0) * (t2/1000000.0);
             }
+            //Calculate Mean
             double mean = sum / reps;
+            //Calculate Variance
             double variance = sumSquared / reps - (mean * mean);
+            //Calculate Standard Deviation
             double stdDev = Math.sqrt(variance);
 
+            /*
+             * Put mathmatical results into an Array to be then put into a csv
+             * file.
+             */
             resultsArray[0] = size[n] * size[n];
             resultsArray[1] = mean;
             resultsArray[2] = variance;
             resultsArray[3] = stdDev;
 
+            //Add the test results to the results matrix
             for(int j = 0; j < 4; j++)
             {
                 resultsMatrix[n][j] = resultsArray[j];
             }
         }
+        //Parse data into csv file
         String fileNameD = "testD.csv";
         writeCSVFile(fileNameD, resultsMatrix, size.length, 
                 resultsArray.length);
         
         System.out.println("Test 1 Done");
         
+        //Start Test 2
         for(int n = 0; n < size.length; n++)
         {       
             //Record mean and std deviation of performing an operation reps 
             //times
             Matrix m = new Matrix(size[n]);
-            m.rowOrder();
             double sum = 0;
             double sumSquared = 0;
             for (int k = 0; k < reps; k++)
             {
                 long t1 = System.nanoTime();
-                findElementD1(m, m.getSize(), 2147483647);
+                findElementD1(m, m.getSize(), 2);
                 long   t2 = System.nanoTime() - t1;
                 //Recording time in miliseconds to make it more interpratable
                 sum += (double)t2/1000000.0;
@@ -110,19 +130,18 @@ public class Q1
         
         System.out.println("Test 2 Done");
         
+        //Start Test 3...
         for(int n = 0; n < size.length; n++)
         {       
             //Record mean and std deviation of performing an operation reps 
             //times
             Matrix m = new Matrix(size[n]);
-            m.rowOrder();
-            m.columnOrder();
             double sum = 0;
             double sumSquared = 0;
             for (int k = 0; k < reps; k++)
             {
                 long t1 = System.nanoTime();
-                findElementD2(m, m.getSize(), 2147483647);
+                findElementD2(m, m.getSize(), 2);
                 long t2 = System.nanoTime() - t1;
                 //Recording time in miliseconds to make it more interpratable
                 sum += (double)t2/1000000.0;
@@ -147,7 +166,6 @@ public class Q1
                 resultsArray.length);
         
         System.out.println("Test 3 Done");
-        
     }
     
     /**
