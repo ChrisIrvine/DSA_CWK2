@@ -16,10 +16,17 @@ package Question2;
  *
  * @author ajb & ruw12gbu, 100036248
  */
-public abstract class HashTable 
+public abstract class HashTable
 {
-    int capacity=100;
-    int size=0;
+    private static final int DEFAULT_CAPACITY = 10;
+    protected int capacity;
+    protected int size;
+    
+    public HashTable()
+    {
+        capacity = DEFAULT_CAPACITY;
+        size = 0; 
+    }
     
     /**
      * Returns the size of the Hash Table.
