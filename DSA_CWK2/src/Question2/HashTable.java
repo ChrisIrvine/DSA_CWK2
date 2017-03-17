@@ -18,13 +18,11 @@ package Question2;
  */
 public abstract class HashTable
 {
-    private static final int DEFAULT_CAPACITY = 10;
-    protected int capacity;
+    protected final int CAPACITY = 10;
     protected int size;
     
     public HashTable()
     {
-        capacity = DEFAULT_CAPACITY;
         size = 0; 
     }
     

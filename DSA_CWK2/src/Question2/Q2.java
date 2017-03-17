@@ -37,6 +37,11 @@ public class Q2
         
         System.out.println(aHT.toString());
         
+        for (int i = 0; i < testValues.length; i++)
+        {
+            aHT.remove(testValues[i]);
+        }
+        
 //        for (int i = 0; i < n.length; i++) 
 //        {
 //            int[] testValues = new int[n[i]];
