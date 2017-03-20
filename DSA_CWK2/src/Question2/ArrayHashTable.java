@@ -1,13 +1,24 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Author:      ruw12gbu, 100036248
+ *
+ * File:        ArrayHashTable.java
+ * 
+ * Description: Child class of HashTable to create a chained Array Hash Table 
+ *              using the chaining method. Contains override methods to add,
+ *              remove and check the Array Hash Table, as well as methods to 
+ *              calculate the position on the table, resize the chains and 
+ *              print out the Array Hash Table.
+ * 
+ * Version:     v1.0 - created with attempted generics
+ *              v2.0 - generics removed
+ *              v2.1 - resizing methods implemented
+ *              v2.2 - toString() method added
+ *              v2.3 - position method added
  */
 package Question2;
 
 /**
- *
- * @author Christopher Irvine
+ * @author ruw12gbu, 100036248
  */
 public class ArrayHashTable extends HashTable
 {
@@ -155,27 +166,44 @@ public class ArrayHashTable extends HashTable
     }
     
     /**
-     * 
-     * @param position 
+     * Mutator method to lengthen the current chain so that more elements can be 
+     * added to it. Does this by temporarily storing the chained elements in an 
+     * array before doubling the length of the chain, before copying the 
+     * elements of the chain back into the chain. 
+     * @param position - position of the chain on the ArrayHashTable
      */
     public void resizeChain(int position)
     {
         //Create holder Array that is double the length of the chain
         Object[] holderArray = new Object[table[position].length*2];
+        //Copy over elements
         System.arraycopy(table[position], 0, holderArray, 0,
                 table[position].length);
-        table[position] = holderArray;
-    }
-    
-    public void shortenChain(int position)
-    {
-        Object[] holderArray = new Object[table[position].length/2];
-        System.arraycopy(table[position], 0, holderArray, 0, table[position].length);
+        //Return elements to the table
         table[position] = holderArray;
     }
     
     /**
-     * 
+     * Mutator method to shorten the current chain so that there is no minimal
+     * overhead in this ArrayHashTable. It does this by temporarily storing the 
+     * chained elements in an array before halving the length of the chain and 
+     * returning the elements to the table. 
+     * @param position - position of the chain on the ArrayHashTable
+     */
+    public void shortenChain(int position)
+    {
+        //Create temporary storage
+        Object[] holderArray = new Object[table[position].length/2];
+        //Copy elements into storage
+        System.arraycopy(table[position], 0, holderArray, 0, 
+                table[position].length);
+        //Re-assign the shortened array
+        table[position] = holderArray;
+    }
+    
+    /**
+     * Method to calculate the position an object should hold on the 
+     * ArrayHashTable.
      * @param obj
      * @return 
      */
@@ -184,6 +212,11 @@ public class ArrayHashTable extends HashTable
         return (obj.hashCode() % table.length);
     }
     
+    /**
+     * Override toString() method to iterate through the table to print out each
+     * element of the ArrayHashTable in turn. 
+     * @return - String builder object
+     */
     @Override
     public String toString()
     {
